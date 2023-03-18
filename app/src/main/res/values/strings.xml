@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BowlingScoreCalculator</string>
+    <string name="score">Score: %s</string>
+    <string name="restart">Restart</string>
+</resources>
