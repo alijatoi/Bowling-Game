@@ -5,3 +5,6 @@ data class Frame(
         val scoreType: ScoreType,
         val throws: List<Throw>
 )
+data class Throw(
+        val hits: Int
+)

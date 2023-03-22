@@ -6,6 +6,3 @@ enum class ScoreType {
     NORMAL;
 }
 
-data class Throw(
-    val hits: Int
-)

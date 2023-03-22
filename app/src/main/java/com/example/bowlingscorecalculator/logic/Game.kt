@@ -1,30 +1,22 @@
-package com.example.bowlingscorecalculator.logic
-
 import com.mosius.bowlingscore.models.Frame
 import com.mosius.bowlingscore.models.ScoreType
 import com.mosius.bowlingscore.models.Throw
 
 class Game {
 
-    // All game frames including empty frames (empty frames are `null`)
-
     val frames: Array<Frame?> = arrayOfNulls<Frame?>(10)
-
     // Current score of the game
-
-    val score: Int
-        get() = frames.lastOrNull { it?.score != null }?.score ?: 0
+    val score = frames.lastOrNull { it?.score != null }?.score ?: 0
 
     private val throws = ArrayList<Throw>()
 
-     // Clear all game data
-
+    // Clear all game data
     fun restart() {
         throws.clear()
         frames.forEachIndexed { i, _ -> frames[i] = null } }
 
-    fun addThrow(`throw`: Throw) {
-        throws.add(`throw`)
+    fun addThrow(hits: Throw) {
+        throws.add(hits)
 
         val lastFrameIndex = frames.indexOfLast { it != null }
 
@@ -35,56 +27,21 @@ class Game {
 
         val targetFrameIndex = Math.max(0, lastFrameIndex - 2)
         val targetFrame = frames[targetFrameIndex]!!
-        val targetThrowIndex = throws.indexOfFirst { targetFrame.throws.first() === it }
+        val targetThrowIndex = throws.indexOfFirst { targetFrame.throws.first() == it }
 
         calculateFrames(targetThrowIndex, targetFrameIndex)
     }
 
-    fun getPossibleHits(): Int {
-        if (frames.filterNotNull().size == 10) {
-            val frame = frames[9]!!
 
-            if (frame.throws.size < 3 && frame.scoreType == ScoreType.STRIKE)
-                return 10
 
-            if (frame.throws.size == 1) {
-                return (10 - frame.throws[0].hits)
-            }
 
-            if (frame.throws.size == 2 && frame.scoreType == ScoreType.SPARE) {
-                return 10
-            }
-
-            return -1
-        }
-
-        val lastFrame = frames.filterNotNull().lastOrNull()
-
-        if (
-            lastFrame != null &&
-            lastFrame.scoreType == ScoreType.NORMAL &&
-            lastFrame.throws.size == 1
-        ) {
-            return (10 - lastFrame.throws[0].hits)
-        }
-
-        return 10
-    }
-
-    /**
-     * Calculate all the frames after the required index
-     *
-     * @param [i] represent the starting index for [Throw]
-     * @param [j] represent the starting index for [Frame]
-     *
-     */
     private fun calculateFrames(i: Int, j: Int) {
-        // break the recursive function calling if all frames are set
+        // stop if all frames are completed
         if (j == frames.size) {
             return
         }
 
-        // it sets all the remaining frames value to null
+        // sets the remaining frames value to null
         if (i >= throws.size) {
             frames[j] = null
             calculateFrames(i, j + 1)
@@ -95,7 +52,6 @@ class Game {
         val previousScore: Int? = if (j > 0) frames[j - 1]?.score else 0
 
         when {
-
             // Strike
             throws[i].hits == 10 -> {
                 // check if Strike score can be calculated otherwise the score is null
@@ -166,4 +122,38 @@ class Game {
             }
         }
     }
+
+
+    fun getPossibleHits(): Int {
+        if (frames.filterNotNull().size == 10) {
+            val frame = frames[9]!!
+
+            if (frame.throws.size < 3 && frame.scoreType == ScoreType.STRIKE)
+                return 10
+
+            if (frame.throws.size == 1) {
+                return (10 - frame.throws[0].hits)
+            }
+
+            if (frame.throws.size == 2 && frame.scoreType == ScoreType.SPARE) {
+                return 10
+            }
+
+            return -1
+        }
+
+        val lastFrame = frames.filterNotNull().lastOrNull()
+
+        if (
+            lastFrame != null &&
+            lastFrame.scoreType == ScoreType.NORMAL &&
+            lastFrame.throws.size == 1
+        ) {
+            return (10 - lastFrame.throws[0].hits)
+        }
+
+        return 10
+    }
+
+
 }

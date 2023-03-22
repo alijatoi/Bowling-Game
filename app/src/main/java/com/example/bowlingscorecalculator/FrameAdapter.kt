@@ -10,7 +10,6 @@ import com.mosius.bowlingscore.models.ScoreType
 
 class FramesAdapter(private val frames: Array<Frame?>):RecyclerView.Adapter<FramesAdapter.ViewHolder>(){
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_frame, parent, false)
         return ViewHolder(view)
@@ -70,12 +69,7 @@ class FramesAdapter(private val frames: Array<Frame?>):RecyclerView.Adapter<Fram
 
     }
 
-
-
     override fun getItemCount() = 10
-
-
-
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val text_score_1 : TextView = view.findViewById(R.id.text_score_1)
