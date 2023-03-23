@@ -1,9 +1,8 @@
     package com.example.bowlingscorecalculator
 
-    import Game
+    import com.example.bowlingscorecalculator.logic.Game
     import androidx.appcompat.app.AppCompatActivity
     import android.os.Bundle
-    import android.util.Log
     import android.view.View
     import android.widget.LinearLayout
     import com.example.bowlingscorecalculator.databinding.ActivityMainBinding
@@ -31,7 +30,6 @@
             binding.recyclerView.adapter?.notifyDataSetChanged()
             binding.recyclerView.smoothScrollToPosition(game.frames.filterNotNull().size)
             checkButtons()
-            updateTotalScore()
         }
 
         private fun checkButtons() {
@@ -46,9 +44,9 @@
             }
         }
 
-        private fun updateTotalScore() {
-            binding.textGameScore.text = getString(R.string.score, game.score.toString())
-        }
+//        private fun updateTotalScore() {
+//            binding.textGameScore.text = getString(R.string.score, game.score.toString())
+//        }
 
         fun onClickRestart(view: View) {
             game.restart()

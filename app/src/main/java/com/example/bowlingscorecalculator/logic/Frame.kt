@@ -8,3 +8,10 @@ data class Frame(
 data class Throw(
         val hits: Int
 )
+
+enum class ScoreType {
+        STRIKE,
+        SPARE,
+        NORMAL;
+}
+

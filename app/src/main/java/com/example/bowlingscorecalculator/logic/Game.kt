@@ -1,3 +1,6 @@
+package com.example.bowlingscorecalculator.logic
+
+import android.util.Log
 import com.mosius.bowlingscore.models.Frame
 import com.mosius.bowlingscore.models.ScoreType
 import com.mosius.bowlingscore.models.Throw
@@ -17,7 +20,7 @@ class Game {
 
     fun addThrow(hits: Throw) {
         throws.add(hits)
-
+        //look for index of last element, if null then return -1
         val lastFrameIndex = frames.indexOfLast { it != null }
 
         if (lastFrameIndex == -1) {
@@ -26,12 +29,13 @@ class Game {
         }
 
         val targetFrameIndex = Math.max(0, lastFrameIndex - 2)
+
         val targetFrame = frames[targetFrameIndex]!!
+
         val targetThrowIndex = throws.indexOfFirst { targetFrame.throws.first() == it }
 
         calculateFrames(targetThrowIndex, targetFrameIndex)
     }
-
 
 
 
@@ -43,14 +47,16 @@ class Game {
 
         // sets the remaining frames value to null
         if (i >= throws.size) {
+            Log.d("i one",i.toString())
+
             frames[j] = null
+
             calculateFrames(i, j + 1)
             return
         }
 
         // get the previous frame score or 0 if there is not any frame yet
         val previousScore: Int? = if (j > 0) frames[j - 1]?.score else 0
-
         when {
             // Strike
             throws[i].hits == 10 -> {
@@ -154,6 +160,5 @@ class Game {
 
         return 10
     }
-
 
 }
