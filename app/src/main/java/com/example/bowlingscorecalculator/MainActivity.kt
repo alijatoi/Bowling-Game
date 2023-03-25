@@ -30,6 +30,7 @@
             binding.recyclerView.adapter?.notifyDataSetChanged()
             binding.recyclerView.smoothScrollToPosition(game.frames.filterNotNull().size)
             checkButtons()
+            updateTotalScore()
         }
 
         private fun checkButtons() {
@@ -44,11 +45,11 @@
             }
         }
 
-//        private fun updateTotalScore() {
-//            binding.textGameScore.text = getString(R.string.score, game.score.toString())
-//        }
+        private fun updateTotalScore() {
+            binding.textGameScore.text = getString(R.string.score, game.score.toString())
+        }
 
-        fun onClickRestart(view: View) {
+        fun onClickRestart(view : View) {
             game.restart()
             binding.recyclerView.adapter?.notifyDataSetChanged()
             checkButtons()

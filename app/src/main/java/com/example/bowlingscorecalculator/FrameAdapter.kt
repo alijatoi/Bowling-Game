@@ -1,5 +1,6 @@
 package com.example.bowlingscorecalculator
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class FramesAdapter(private val frames: Array<Frame?>):RecyclerView.Adapter<Fram
             holder.text_score_2.text = ""
             holder.text_score_3.text = ""
             holder.text_frame_score.text = ""
+
         }
         if (item != null) {
             when (item.scoreType) {
@@ -62,8 +64,8 @@ class FramesAdapter(private val frames: Array<Frame?>):RecyclerView.Adapter<Fram
                 }
             }
         }
-
         if (item != null) {
+            Log.d("item.score",item.score.toString())
             holder.text_frame_score.text = item.score?.toString() ?: ""
         }
 
@@ -77,7 +79,5 @@ class FramesAdapter(private val frames: Array<Frame?>):RecyclerView.Adapter<Fram
         val text_score_3 : TextView = view.findViewById(R.id.text_score_3)
         val text_frame_score : TextView = view.findViewById(R.id.text_frame_score)
         val view_separator : View = view.findViewById(R.id.view_separator)
-
-
     }
 }
