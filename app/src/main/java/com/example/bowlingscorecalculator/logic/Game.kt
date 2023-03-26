@@ -17,62 +17,29 @@ class Game {
 
     // Clear all game data
     fun restart() {
-        Log.d("Empty Frames",frames.toString())
         throws.clear()
         frames.forEachIndexed { i, _ -> frames[i] = null } }
 
     fun addThrow(pinsDown: Throw) {
-
         throws.add(pinsDown)
-        Log.d("Throws List",throws.toString())
-        //look for index of last element, if null then return -1
-        val lastFrameIndex = frames.indexOfLast { it != null }
-        Log.d("Last Frame Index ",lastFrameIndex.toString())
-
-        if (lastFrameIndex == -1) {
-            Log.d("Last Frame Index inside IF index = -1 ",lastFrameIndex.toString())
-            calculateFrames(0, 0)
-            return
-        }
-
-        val targetFrameIndex = Math.max(0, lastFrameIndex - 2)
-        Log.d("Target Frame Index", targetFrameIndex.toString())
-
-        val targetFrame = frames[targetFrameIndex]!!
-        Log.d("frames[targetFrameIndex]!!", frames[targetFrameIndex]!!.toString())
-        Log.d("Target Frame ", targetFrame.toString())
-
-
-        val targetThrowIndex = throws.indexOfFirst { targetFrame.throws.first() === it }
-        Log.d("throws.indexOfFirst { targetFrame.throws.first() == it }", throws.indexOfFirst { targetFrame.throws.first() == it }.toString())
-        Log.d("calculateFrames One","$targetThrowIndex and $targetFrameIndex")
-        calculateFrames(targetThrowIndex, targetFrameIndex)
+        calculateFrames(0, 0)
     }
 
-    /**
-     * Calculate all the frames after the required index
-     *
-     * @param [i] represent the starting index for [Throw]
-     * @param [j] represent the starting index for [Frame]
-     *
-     */
     private fun calculateFrames(i: Int, j: Int) {
-
-
         // break the recursive function calling if all frames are set
     if (j == frames.size) {
         return
     }
 
-    // it sets all the remaining frames value to null
     if (i >= throws.size) {
-        frames[j] = null
         calculateFrames(i, j + 1)
         return
     }
 
-    // get the previous frame score or 0 if there is not any frame yet
-    val previousScore: Int? = if (j > 0) frames[j - 1]?.score else 0
+        // get the previous frame score or 0 if there is not any frame yet
+        // for the first frame it will be 0 beacause its first frame no previous frame
+        val previousScore: Int? = if (j > 0) frames[j - 1]?.score else 0
+        Log.d("previousScore",previousScore.toString())
 
     when {
 
@@ -81,16 +48,19 @@ class Game {
             // check if Strike score can be calculated otherwise the score is null
             val score: Int? = if (throws.size > i + 2) {
                 previousScore?.let { it + 10 + throws[i + 1].hits + throws[i + 2].hits }
-            } else {
+            }
+            else {
                 null
             }
+            Log.d("scoressstri",score.toString())
+            Log.d("Strike","Strike")
 
             // create a sub list for frame throws
             val throws = ArrayList(throws.subList(
                 i,
                 if (j == 9) throws.size else Math.min(i + 1, throws.size)
             ))
-            Log.d("scoreeeee",score.toString())
+            Log.d("throws strike",throws.toString())
             // create the frame
             frames[j] = Frame(score, ScoreType.STRIKE, throws)
 
@@ -129,11 +99,14 @@ class Game {
             } else {
                 null
             }
+            Log.d("scoreeeee in Normal",score.toString())
+
 
             val throws = ArrayList(throws.subList(
                 i,
                 Math.min(i + 2, throws.size)
             ))
+            Log.d("tee",throws.toString())
             Log.d("scoreeeee in Normal",score.toString())
 
             frames[j] = Frame(score, ScoreType.NORMAL, throws)
@@ -142,6 +115,8 @@ class Game {
         }
     }
 }
+
+
 
 
     fun getPossibleHits(): Int {
@@ -174,5 +149,4 @@ class Game {
 
         return 10
     }
-
 }
