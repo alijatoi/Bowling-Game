@@ -6,16 +6,13 @@ import com.mosius.bowlingscore.models.Throw
 
 class Game {
 
-    // This is Frames -> Score of Particular Frame, Score Type, List of throws that made up the frame
     val frames: Array<Frame?> = arrayOfNulls<Frame?>(10)
 
-    // Current score of the game
     val score: Int
         get() = frames.lastOrNull { it?.score != null }?.score ?: 0
 
     private val throws = ArrayList<Throw>()
 
-    // Clear all game data
     fun restart() {
         throws.clear()
         frames.forEachIndexed { i, _ -> frames[i] = null } }
@@ -25,46 +22,39 @@ class Game {
         calculateFrames(0, 0)
     }
 
+   // i represent the starting index for [Throw]
+   // j represent the starting index for [Frame]
     private fun calculateFrames(i: Int, j: Int) {
-        // break the recursive function calling if all frames are set
+
     if (j == frames.size) {
         return
     }
 
     if (i >= throws.size) {
-        calculateFrames(i, j + 1)
+        calculateFrames(i, j+1 )
         return
     }
 
-        // get the previous frame score or 0 if there is not any frame yet
-        // for the first frame it will be 0 beacause its first frame no previous frame
+
         val previousScore: Int? = if (j > 0) frames[j - 1]?.score else 0
-        Log.d("previousScore",previousScore.toString())
 
     when {
 
         // Strike
         throws[i].hits == 10 -> {
-            // check if Strike score can be calculated otherwise the score is null
             val score: Int? = if (throws.size > i + 2) {
                 previousScore?.let { it + 10 + throws[i + 1].hits + throws[i + 2].hits }
             }
             else {
                 null
             }
-            Log.d("scoressstri",score.toString())
-            Log.d("Strike","Strike")
 
             // create a sub list for frame throws
             val throws = ArrayList(throws.subList(
                 i,
                 if (j == 9) throws.size else Math.min(i + 1, throws.size)
             ))
-            Log.d("throws strike",throws.toString())
-            // create the frame
             frames[j] = Frame(score, ScoreType.STRIKE, throws)
-
-            // calculate next frame
             calculateFrames(i + 1, j + 1)
         }
 
@@ -82,7 +72,6 @@ class Game {
                 i,
                 if (j == 9) throws.size else Math.min(i + 2, throws.size)
             ))
-            Log.d("scoreeeee in spare",score.toString())
 
             // create the frame
             frames[j] = Frame(score, ScoreType.SPARE, throws)
@@ -99,22 +88,18 @@ class Game {
             } else {
                 null
             }
-            Log.d("scoreeeee in Normal",score.toString())
-
 
             val throws = ArrayList(throws.subList(
                 i,
                 Math.min(i + 2, throws.size)
             ))
-            Log.d("tee",throws.toString())
-            Log.d("scoreeeee in Normal",score.toString())
-
             frames[j] = Frame(score, ScoreType.NORMAL, throws)
 
             calculateFrames(i + 2, j + 1)
         }
     }
 }
+
 
 
 

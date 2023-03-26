@@ -65,7 +65,6 @@ class FramesAdapter(private val frames: Array<Frame?>):RecyclerView.Adapter<Fram
             }
         }
         if (item != null) {
-            Log.d("item.score",item.score.toString())
             holder.text_frame_score.text = item.score?.toString() ?: ""
         }
 
