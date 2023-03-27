@@ -43,24 +43,24 @@ class FramesAdapter(private val frames: Array<Frame?>):RecyclerView.Adapter<Fram
 
                     if (position == 9) {
                         holder.text_score_3.text = "X"
-                        holder.text_score_2.text = (item.throws.getOrNull(1)?.hits)?.toString() ?: ""
+                        holder.text_score_2.text = (item.throws.getOrNull(1))?.toString() ?: ""
                     } else {
                         holder.text_score_1.text = ""
                         holder.text_score_2.text = "X"
                     }
 
-                    holder.text_score_3.text = (item.throws.getOrNull(2)?.hits)?.toString() ?: ""
+                    holder.text_score_3.text = (item.throws.getOrNull(2)?.toString()) ?: ""
 
                 }
                 ScoreType.SPARE -> {
-                    holder.text_score_1.text = (item.throws.getOrNull(0)?.hits)?.toString() ?: ""
+                    holder.text_score_1.text = (item.throws.getOrNull(0)?.toString()) ?: ""
                     holder.text_score_2.text = "/"
-                    holder.text_score_3.text = (item.throws.getOrNull(2)?.hits)?.toString() ?: ""
+                    holder.text_score_3.text = (item.throws.getOrNull(2)?.toString()) ?: ""
                 }
                 ScoreType.NORMAL -> {
-                    holder.text_score_1.text = (item.throws.getOrNull(0)?.hits)?.toString() ?: ""
-                    holder.text_score_2.text = (item.throws.getOrNull(1)?.hits)?.toString() ?: ""
-                    holder.text_score_3.text = (item.throws.getOrNull(2)?.hits)?.toString() ?: ""
+                    holder.text_score_1.text = (item.throws.getOrNull(0)?.toString()) ?: ""
+                    holder.text_score_2.text = (item.throws.getOrNull(1)?.toString()) ?: ""
+                    holder.text_score_3.text = (item.throws.getOrNull(2)?.toString()) ?: ""
                 }
             }
         }

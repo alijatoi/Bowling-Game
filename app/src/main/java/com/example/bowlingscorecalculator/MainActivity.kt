@@ -6,7 +6,6 @@
     import android.view.View
     import android.widget.LinearLayout
     import com.example.bowlingscorecalculator.databinding.ActivityMainBinding
-    import com.mosius.bowlingscore.models.Throw
 
     class MainActivity : AppCompatActivity() {
 
@@ -26,7 +25,7 @@
 
         fun buttonOnClick(view: View) {
             val value = view.tag.toString().toInt()
-            game.addThrow(Throw(value))
+            game.addThrow(value)
             binding.recyclerView.adapter?.notifyDataSetChanged()
             binding.recyclerView.smoothScrollToPosition(game.frames.filterNotNull().size)
             checkButtons()
