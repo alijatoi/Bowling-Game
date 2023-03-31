@@ -1,5 +1,4 @@
-# Bowling Game Score-Calculator
-Bowling Score Calculator Android App
+# Bowling Game Score Calculator Android App
 #### Programming Language Used : Kotlin
 #### Android Component : Recyclerview 
 
